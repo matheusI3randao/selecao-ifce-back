@@ -49,6 +49,7 @@ public class PessoaController {
 	}
 
 	@GetMapping()
+	@ApiOperation(value = "Busca todas as Pessoas e pode ser filtrado por CPF e Nome")
 	public ResponseEntity<Page<PessoaListagemDTO>> findAll(@QueryParam("nome") String nome,
 			@QueryParam("cpf") String cpf,
 			@RequestParam(value = "page", required = false, defaultValue = "0") Integer pageNo,
@@ -61,6 +62,7 @@ public class PessoaController {
 	}
 
 	@GetMapping(value = "/{id}")
+	@ApiOperation(value = "Busca um cadastro de Pessoa pelo ID")
 	public ResponseEntity<PessoaOutputDTO> findById(@PathVariable("id") Long id) {
 		Optional<Pessoa> empresa = service.findById(id);
 		if (!empresa.isPresent())
