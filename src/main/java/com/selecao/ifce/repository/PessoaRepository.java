@@ -20,4 +20,6 @@ public interface PessoaRepository extends CrudRepository<Pessoa, Long> {
 			+ "  (:nome is null or lower(p.nome) like :nome) AND "
 			+ "  (:cpf is null or p.cpf like :cpf ) ")
 	public Page<Pessoa> findAll(@Param("nome") String nome, @Param("cpf") String cpf, Pageable pageable);
+	
+	public Pessoa findByCpf(String cpf);
 }

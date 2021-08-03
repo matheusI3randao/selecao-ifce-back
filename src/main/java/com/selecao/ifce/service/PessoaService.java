@@ -12,6 +12,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.selecao.ifce.dto.PessoaInputDTO;
+import com.selecao.ifce.exception.PessoaException;
 import com.selecao.ifce.model.Habilidade;
 import com.selecao.ifce.model.Pessoa;
 import com.selecao.ifce.repository.HabilidadeRepository;
@@ -44,6 +45,9 @@ public class PessoaService {
 	}
 
 	public Pessoa save(PessoaInputDTO pessoaInput) {
+		if (verifyDuplicateCpf(pessoaInput.getCpf()))
+			throw new PessoaException("O CPF " + pessoaInput.getCpf() + " já está cadastrado!");
+
 		Pessoa pessoa = modelMapper.map(pessoaInput, Pessoa.class);
 
 		// Setando ID da pessoa pra null pois o ModelMapper converte pelo nome
@@ -62,6 +66,10 @@ public class PessoaService {
 
 	public void delete(Long id) {
 		this.repository.delete(new Pessoa(id));
+	}
+
+	private boolean verifyDuplicateCpf(String cpf) {
+		return this.repository.findByCpf(cpf) != null;
 	}
 
 	// Código feito somente para dar carga na tabela de habilidades

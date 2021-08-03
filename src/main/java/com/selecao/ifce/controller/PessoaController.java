@@ -83,7 +83,7 @@ public class PessoaController {
 			return new ResponseEntity<>(modelMapper.map(pessoa, PessoaOutputDTO.class), new HttpHeaders(),
 					HttpStatus.OK);
 		} catch (Exception e) {
-			throw new PessoaException("Erro ao cadastrar a pessoa! Entre em contato com o adminsitrador do sistema.");
+			throw new PessoaException(e.getMessage());
 		}
 	}
 
